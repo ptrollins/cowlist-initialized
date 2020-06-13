@@ -1,9 +1,20 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const bodyParser = require('body-parser');
 
-app.use(express.static('./client/dist'))
+const app = express();
+const port = 3000;
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.use(express.static('./client/dist'));
+app.use(bodyParser.json());
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.get('/', (req, res) => res.send('Hello World!'));
+
+app.get('/api/cows', (req, res) => {
+  res.setStatus(200).send(results);
+});
+
+app.post('/api/cows', (req, res) => {
+  res.sendStatus(201);
+});
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
