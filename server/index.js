@@ -19,7 +19,7 @@ app.get('/api/cows', (req, res) => {
   cow
     .getCows()
     .then((cows) => {
-      console.log('get cow success');
+      console.log('get cow success: ', cows);
       res.status(200).send(cows);
     })
     .catch((err) => {

@@ -3,37 +3,58 @@ import React from 'react';
 class CowList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      cow: {
+        name: '',
+        description: '',
+      },
+    };
+    this.showCow = this.showCow.bind(this);
   }
 
-  addCow() {}
+  showCow(event) {
+    const data = event.target.dataset,
+      cowName = data.name,
+      cowDesc = data.description;
+    this.setState({ cow: { name: cowName, description: cowDesc } });
+  }
 
   render() {
     return (
       <section>
-        {!this.props.cow ? (
+        {!this.state.cow ? (
           <></>
         ) : (
           <article>
-            <h1>{this.props.cow.name}</h1>
-            <p>{this.props.cow.description}</p>
+            <h1>{this.state.cow.name}</h1>
+            <p>{this.state.cow.description}</p>
           </article>
         )}
         <article>
-          <ul>
+          <ol>
             {this.props.cows.map((cow) => {
-              return <CowListItem cow={cow} />;
+              return (
+                <CowListItem
+                  cow={cow}
+                  handleClick={this.showCow}
+                  key={cow.name}
+                />
+              );
             })}
-          </ul>
+          </ol>
         </article>
       </section>
     );
   }
 }
 
-function CowListItem({ cow }) {
+function CowListItem({ cow, handleClick }) {
   return (
-    <li key={cow.name} value={cow.name}>
+    <li
+      data-name={cow.name}
+      data-description={cow.description}
+      onClick={handleClick}
+    >
       {cow.name}
     </li>
   );
