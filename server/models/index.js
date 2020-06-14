@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CowSchema = new Schema({
+  id: { type: Number, unique: true },
   name: { type: String, unique: true },
   description: String,
 });
@@ -10,10 +11,7 @@ const CowSchema = new Schema({
 const Cow = mongoose.model('Cow', CowSchema);
 
 module.exports.getCows = () => {
-  console.log('getcows filter: ');
-  let cow = Cow.find().exec();
-  console.log('getcows done');
-  return cow;
+  return Cow.find().exec();
 };
 
 module.exports.saveCows = (cow) => {
