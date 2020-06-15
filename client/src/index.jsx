@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+import CowForm from './cowForm';
 import CowList from './cowList';
 
 class App extends React.Component {
@@ -9,13 +10,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       cows: [],
-      cow: {
-        name: '',
-        description: '',
-      },
     };
 
     this.getCows = this.getCows.bind(this);
+    this.saveCow = this.saveCow.bind(this);
   }
 
   componentDidMount() {
@@ -26,7 +24,6 @@ class App extends React.Component {
     axios
       .get('/api/cows')
       .then(({ data }) => {
-        console.log('getcows: ', data);
         this.setState({ cows: data });
       })
       .catch((err) => {
@@ -35,10 +32,10 @@ class App extends React.Component {
   }
 
   saveCow(cow) {
+    console.log(cow);
     axios
       .post('/api/cows', cow)
       .then((result) => {
-        console.log('savecows: ', result);
         this.getCows();
       })
       .catch((err) => {
@@ -47,13 +44,12 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.cows);
     return (
       <>
         <header>
           <h1>Cow List!</h1>
         </header>
-
+        <CowForm saveCow={this.saveCow} />
         <CowList cows={this.state.cows} />
       </>
     );

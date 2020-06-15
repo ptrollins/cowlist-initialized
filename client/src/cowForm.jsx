@@ -5,39 +5,50 @@ class CowForm extends React.Component {
     super(props);
     this.state = {
       cowName: '',
+      cowDesc: '',
     };
 
-    this.nameChangeHandler = this.nameChangeHandler.bind(this);
-    this.descriptionChangeHandler = this.descriptionChangeHandler.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
 
   changeHandler(event) {
-    let cowName = event.target.value;
-    console.log(cowName);
-    this.setState({ cowName: cowName });
+    let value = event.target.value;
+    let key = event.target.getAttribute('name');
+
+    this.setState({ [key]: value });
   }
 
   submitHandler(event) {
     event.preventDefault();
+    this.props.saveCow({
+      name: this.state.cowName,
+      description: this.state.cowDesc,
+    });
+    this.setState({
+      cowName: '',
+      cowDesc: '',
+    });
   }
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.submitHandler}>
+        <label htmlFor="cowName">Name: </label>
         <input
           type="text"
-          name="cowname"
+          name="cowName"
           value={this.state.cowName}
-          onChange={this.nameChangeHandler}
+          onChange={this.changeHandler}
         />
-        <input
-          type="textarea"
-          name="cowdescription"
-          value={this.state.cowDescription}
-          onChange={this.descriptionChangeHandler}
+        <label htmlFor="cowName">Description: </label>
+        <textarea
+          rows="4"
+          name="cowDesc"
+          value={this.state.cowDesc}
+          onChange={this.changeHandler}
         />
-        <input type="submit" value="Submit" onSubmit={this.submitHandler} />
+        <input type="submit" value="Submit" />
       </form>
     );
   }

@@ -31,7 +31,7 @@ app.get('/api/cows', (req, res) => {
 app.post('/api/cows', (req, res) => {
   console.log('post cows: ', req.body);
   cow
-    .saveCows(req.body)
+    .saveCow(req.body)
     .then(() => {
       res.sendStatus(201);
     })
